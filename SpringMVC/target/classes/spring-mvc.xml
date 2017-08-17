@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+
+    <!--fastjson json驱动-->
+    <mvc:annotation-driven>
+        <!--配置@ResponseBody由fastjson解析-->
+        <mvc:message-converters>
+            <bean id="fastJsonHttpMessageConverter" class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/html;charset=UTF-8</value>
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!--开启注解驱动-->
+    <mvc:annotation-driven/>
+
+    <!--配置拦截器-->
+    <mvc:interceptors>
+        <!--拦截一切请求-->
+        <!--<bean class="com.Interceptor.SpringMVCInterceptor"/>-->
+        <!--只拦截配置的路径-->
+        <mvc:interceptor>
+            <mvc:mapping path="/user/demo"/>
+            <bean class="com.Interceptor.SpringMVCInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+
+    <!--包扫描路径-->
+    <context:component-scan base-package="com.**"/>
+    <!--ViewResolver-->
+     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+            <property name="prefix" value="/WEB-INF/view/"/>
+            <property name="suffix" value=".jsp"/>
+            <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+     </bean>
+
+
+    <!--文件上床下载-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxInMemorySize" value="500000"/>
+        <property name="maxUploadSize" value="500000"/>
+        <property name="defaultEncoding" value="utf-8"/>
+    </bean>
+</beans>
