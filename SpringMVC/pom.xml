@@ -176,6 +176,7 @@
 
   </dependencies>
   <build>
+    <resources></resources>
     <finalName>mvc.test</finalName>
   </build>
 </project>

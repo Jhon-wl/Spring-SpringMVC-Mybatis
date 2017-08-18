@@ -1,8 +1,11 @@
 package com.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.entity.Student;
 import com.entity.User;
+import com.service.StudentService;
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -60,17 +63,23 @@ public class UserController {
     }
 
 //    返回JSON数据格式
-    @RequestMapping("/do") // method = RequestMethod.POST  可以限制使用post或者get请求
-    public String doUser(@RequestBody User user){
-//        User user = new User();
-        user.setId(112);
-       user.setName("enen");
+//    @RequestMapping("/do") // method = RequestMethod.POST  可以限制使用post或者get请求
+//    public String doUser(@RequestBody User user){
+////        User user = new User();
+//        user.setId(112);
+//       user.setName("enen");
+//
+//
+//        return "user";
+//    }
+    @Autowired
+    private StudentService studentService;
+    @RequestMapping("/do")
+    public String doUser(@RequestBody Student student) throws Exception {
+        int a = studentService.createStudent(student);
 
-
-        return "user";
+        return "aaa";
     }
-
-
 
     @RequestMapping("/demo")
     public String demoUser(){

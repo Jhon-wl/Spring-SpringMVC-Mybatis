@@ -41,7 +41,11 @@
 
 
     <!--包扫描路径-->
-    <context:component-scan base-package="com.**"/>
+    <!--SpringMVC 子容器的Service 没有事务能力  ,Spring的顶级容器才有Service事务能力,
+                    所以此处需要屏蔽@service注解,让它在顶级容器中加载-->
+    <context:component-scan base-package="com.**">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+    </context:component-scan>
     <!--ViewResolver-->
      <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
             <property name="prefix" value="/WEB-INF/view/"/>

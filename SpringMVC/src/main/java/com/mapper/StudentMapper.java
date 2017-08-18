@@ -5,12 +5,14 @@ package com.mapper;
 
 
 import com.entity.Student;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * Create by mr.wl on 2017/8/10
  */
+@Repository("StudentMapper")
 public interface StudentMapper {
     //插入学生信息到数据库
     int insertStudent(Student student) throws Exception;
